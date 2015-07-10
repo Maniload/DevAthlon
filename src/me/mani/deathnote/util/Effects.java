@@ -17,7 +17,7 @@ public class Effects {
 	
 	public static void play(Player player, Sound sound) {
 		if (sound != null)
-			player.playSound(player.getLocation(), sound, 1, 1);
+			player.playSound(player.getLocation(), sound, 1, 0.64f);
 	}
 	
 	public static void showAll(Effect effect, Location location) {

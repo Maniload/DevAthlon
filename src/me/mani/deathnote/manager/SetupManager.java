@@ -12,6 +12,7 @@ public class SetupManager {
 
 	private FileConfiguration config;
 	public LocationManager locationManager;
+	public InventoryManager inventoryManager;
 	
 	public SetupManager(FileConfiguration config) {
 		this.config = config;
@@ -20,6 +21,7 @@ public class SetupManager {
 	
 	private void setup() {
 		setupLocations();
+		setupInventories();
 		setupListener();
 		setupCommands();
 	}
@@ -27,6 +29,10 @@ public class SetupManager {
 	private void setupLocations() {
 		World defaultWorld = Bukkit.getWorld("world");
 		locationManager = new LocationManager((Location) config.get("spawnLocation", defaultWorld.getSpawnLocation()));
+	}
+	
+	private void setupInventories() {
+		inventoryManager = new InventoryManager();
 	}
 	
 	private void setupListener() {
