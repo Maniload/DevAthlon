@@ -46,7 +46,11 @@ public class GameManager {
 	}
 	
 	private void startGame() {
-		
+		Effects.playAll(Sound.BLAZE_BREATH);
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			DeathNotePlayer deathNotePlayer = DeathNotePlayer.getDeathNotePlayer(player);
+			deathNotePlayer.addSoulEffect(200);
+		}
 	}
 
 }

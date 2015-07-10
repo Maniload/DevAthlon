@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import me.mani.deathnote.util.ItemUtil;
-import me.mani.deathnote.util.Messenger;
 import me.mani.deathnote.util.RandomUtil;
 
 import org.bukkit.Bukkit;
@@ -37,7 +36,6 @@ public class ChestManager {
 			else if (randomInteger < 58)
 				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), deathNoteItemStack);
 			chests.put(location, inventory);
-			Messenger.sendAll(randomInteger + "");
 		}
 		player.openInventory(chests.get(location));
 	}

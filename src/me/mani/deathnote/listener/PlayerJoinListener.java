@@ -4,6 +4,7 @@ import me.mani.deathnote.DeathNoteListener;
 import me.mani.deathnote.DeathNotePlayer;
 import me.mani.deathnote.util.Messenger;
 
+import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,9 +17,11 @@ public class PlayerJoinListener extends DeathNoteListener {
 		Player player = ev.getPlayer();
 		DeathNotePlayer.getDeathNotePlayer(player);
 		ev.setJoinMessage("§c" + player.getName() + " §7ist dem Spiel beigetreten.");
+		if (!player.isOp())
+			player.setGameMode(GameMode.SPECTATOR);
 		
 		Messenger.send(player, "/start - Das Spiel starten.");
-		Messenger.send(player, "/tutorial - Das (aufwendige) Tutorial anschauen.");
+		Messenger.send(player, "/tutorial - Das Tutorial anschauen.");
 		
 	}
 	
