@@ -1,0 +1,6 @@
+name: DeathNote
+version: 1.0
+main: me.mani.deathnote.DeathNote
+
+commands:
+  tutorial:
