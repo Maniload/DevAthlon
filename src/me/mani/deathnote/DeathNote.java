@@ -9,6 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class DeathNote extends JavaPlugin {
 	
 	private static DeathNote instance;
+	private GameManager gameManager;
 	
 	@Override
 	public void onEnable() {
@@ -17,7 +18,11 @@ public class DeathNote extends JavaPlugin {
 		
 		Messenger.sendAll("DeathNote - by Overload & Laubfrosch7");
 		
-		new GameManager(new SetupManager(getConfig()));
+		gameManager = new GameManager(new SetupManager(getConfig()));
+	}
+	
+	public GameManager getGameManager() {
+		return gameManager;
 	}
 	
 	public static DeathNote getInstance() {

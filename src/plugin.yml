@@ -4,3 +4,4 @@ main: me.mani.deathnote.DeathNote
 
 commands:
   tutorial:
+  start:

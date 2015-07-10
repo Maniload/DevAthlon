@@ -1,6 +1,8 @@
 package me.mani.deathnote.manager;
 
+import me.mani.deathnote.command.StartCommand;
 import me.mani.deathnote.command.TutorialCommand;
+import me.mani.deathnote.listener.PlayerInteractListener;
 import me.mani.deathnote.listener.PlayerJoinListener;
 
 import org.bukkit.Bukkit;
@@ -37,10 +39,12 @@ public class SetupManager {
 	
 	private void setupListener() {
 		new PlayerJoinListener();
+		new PlayerInteractListener();
 	}
 	
 	private void setupCommands() {
 		new TutorialCommand();
+		new StartCommand();
 	}
 	
 }

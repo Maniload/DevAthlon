@@ -15,7 +15,7 @@ public class InventoryManager {
 	}
 	
 	private void prepareIngameInventory() {
-		ingameInventoryItems = new ItemStack[45];
+		ingameInventoryItems = new ItemStack[36];
 		ingameInventoryItems[0] = ItemUtil.createItem(new ItemStack(Material.IRON_SWORD), "ß7Schwert", "ßeSchlage einen Gegner damit,", "ßeum an sein Blut zu gelangen.");
 		ingameInventoryItems[1] = ItemUtil.createItem(new ItemStack(Material.GLASS_BOTTLE), "ß7leeres Gef‰ﬂ", "ßeIn diesem Gef‰ﬂ wird,", "ßeBlut eines Gegners gelagert.");
 		for (int i = 9; i < ingameInventoryItems.length; i++)

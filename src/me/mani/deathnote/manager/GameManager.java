@@ -14,10 +14,12 @@ public class GameManager {
 	
 	public LocationManager locationManager;
 	public InventoryManager inventoryManager;
+	public ChestManager chestManager;
 	
 	public GameManager(SetupManager setupManager) {
 		locationManager = setupManager.locationManager;
 		inventoryManager = setupManager.inventoryManager;
+		chestManager = new ChestManager();
 	}
 	
 	public void startWarmUp() {
@@ -27,12 +29,12 @@ public class GameManager {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			DeathNotePlayer deathNotePlayer = DeathNotePlayer.getDeathNotePlayer(player);
 			deathNotePlayer.setIngame(true);
-			player.teleport(locationManager.getSpawnLocation().clone().add(Math.sin(1 / playerCount * i) * 5, 0, Math.cos(1 / playerCount * i++)));
+			player.teleport(locationManager.getSpawnLocation().clone().add(Math.cos(Math.toRadians(360 / playerCount * i)) * 5, 0, Math.sin(Math.toRadians(360 / playerCount * i++))));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 160, 0));
 		}
 		CountdownManager.createCountdown((ev) -> {
 			
-			ev.setMessage("Das Spiel startet in " + ev.getCurrentNumber() + " Sekunde" + (ev.getCurrentNumber() == 1 ? null : 'n') + ".");
+			ev.setMessage("Das Spiel startet in " + ev.getCurrentNumber() + " Sekunde" + (ev.getCurrentNumber() == 1 ? "" : 'n') + ".");
 			ev.setSound(Sound.BLAZE_HIT);
 			
 			if (ev.getCurrentNumber() == 5) {
@@ -43,7 +45,7 @@ public class GameManager {
 		}, () -> startGame(), 10, 0, 20L);
 	}
 	
-	public void startGame() {
+	private void startGame() {
 		
 	}
 
