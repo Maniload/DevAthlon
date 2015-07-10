@@ -1,5 +1,6 @@
 package me.mani.deathnote;
 
+import me.mani.deathnote.manager.GameManager;
 import me.mani.deathnote.manager.SetupManager;
 import me.mani.deathnote.util.Messenger;
 
@@ -16,7 +17,7 @@ public class DeathNote extends JavaPlugin {
 		
 		Messenger.sendAll("DeathNote - by Overload & Laubfrosch7");
 		
-		SetupManager setupManager = new SetupManager();
+		new GameManager(new SetupManager(getConfig()));
 	}
 	
 	public static DeathNote getInstance() {
