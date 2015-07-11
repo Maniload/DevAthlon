@@ -13,13 +13,15 @@ import org.bukkit.potion.PotionEffectType;
 public class GameManager {
 	
 	public LocationManager locationManager;
+	public ItemManager itemManager;
 	public InventoryManager inventoryManager;
 	public ChestManager chestManager;
 	
 	public GameManager(SetupManager setupManager) {
 		locationManager = setupManager.locationManager;
+		itemManager = setupManager.itemManager;
 		inventoryManager = setupManager.inventoryManager;
-		chestManager = new ChestManager();
+		chestManager = setupManager.chestManager;
 	}
 	
 	public void startWarmUp() {
@@ -31,6 +33,10 @@ public class GameManager {
 			deathNotePlayer.setIngame(true);
 			player.teleport(locationManager.getSpawnLocation().clone().add(Math.cos(Math.toRadians(360 / playerCount * i)) * 5, 0, Math.sin(Math.toRadians(360 / playerCount * i++))));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 160, 0));
+			player.setHealth(20.0);
+			player.setMaxHealth(20.0);
+			player.setHealthScale(20.0);
+			player.setHealthScaled(true);
 		}
 		CountdownManager.createCountdown((ev) -> {
 			
@@ -40,6 +46,12 @@ public class GameManager {
 			if (ev.getCurrentNumber() == 5) {
 				Bukkit.getOnlinePlayers().forEach((player) -> inventoryManager.giveIngameInventory(player));
 				Effects.playAll(Sound.ITEM_PICKUP);
+			}
+			else if (ev.getCurrentNumber() >= 3) {
+				Bukkit.getOnlinePlayers().forEach((player) -> {
+					player.setMaxHealth(ev.getCurrentNumber() * 2.0);
+					player.setHealthScale(ev.getCurrentNumber() * 2.0);
+				});
 			}
 			
 		}, () -> startGame(), 10, 0, 20L);

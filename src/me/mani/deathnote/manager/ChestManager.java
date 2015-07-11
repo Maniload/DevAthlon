@@ -3,7 +3,6 @@ package me.mani.deathnote.manager;
 import java.util.HashMap;
 import java.util.Map;
 
-import me.mani.deathnote.util.ItemUtil;
 import me.mani.deathnote.util.RandomUtil;
 
 import org.bukkit.Bukkit;
@@ -11,17 +10,14 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 public class ChestManager {
-
+	
+	private ItemManager itemManager;
 	private Map<Location, Inventory> chests;
 	
-	private ItemStack deathNoteItemStack = ItemUtil.createItem(new ItemStack(Material.PAPER), "§7Death Note");
-	private ItemStack altarFinderItemStack = ItemUtil.createItem(new ItemStack(Material.COMPASS), "§7Altarfinder");
-	private ItemStack lifeItemStack = ItemUtil.createItem(new ItemStack(Material.INK_SACK, 1, (short) 1), "§cLeben");
-	
-	public ChestManager() {
+	public ChestManager(ItemManager itemManager) {
+		this.itemManager = itemManager;
 		chests = new HashMap<>();
 	}
 	
@@ -30,11 +26,11 @@ public class ChestManager {
 			Inventory inventory = Bukkit.createInventory(null, 9 * 5, "Equipment");
 			int randomInteger = RandomUtil.getRandomInteger(0, 100);
 			if (randomInteger < 8)
-				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), lifeItemStack);
+				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), itemManager.getItemStack(Material.INK_SACK));
 			else if (randomInteger < 18)
-				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), altarFinderItemStack);
+				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), itemManager.getItemStack(Material.COMPASS));
 			else if (randomInteger < 58)
-				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), deathNoteItemStack);
+				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), itemManager.getItemStack(Material.PAPER));
 			chests.put(location, inventory);
 		}
 		player.openInventory(chests.get(location));

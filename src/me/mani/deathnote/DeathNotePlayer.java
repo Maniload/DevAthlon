@@ -3,6 +3,7 @@ package me.mani.deathnote;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -30,6 +31,7 @@ public class DeathNotePlayer {
 		soulEffect = true;
 		player.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, ticks, 0, false, false));
 		player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, ticks, 3, false, false));
+		Bukkit.getScheduler().runTaskLater(DeathNote.getInstance(), () -> soulEffect = false, ticks);
 	}
 	
 	public boolean hasSoulEffect() {
