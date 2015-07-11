@@ -2,13 +2,10 @@ package me.mani.deathnote.util;
 
 import java.util.Arrays;
 
-import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
@@ -23,19 +20,7 @@ public class ItemUtil {
 		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
 		itemMeta.setDisplayName(displayName);
 		itemMeta.setLore(Arrays.asList(lore));
-		itemStack.setItemMeta(itemMeta);
-		return itemStack;
-	}
-	
-	public static ItemStack createItem(ItemStack itemStack, String displayName, Enchantment enchantment, int level) {
-		return createItem(itemStack, displayName, enchantment, level, new String[]{});
-	}
-	
-	public static ItemStack createItem(ItemStack itemStack, String displayName, Enchantment enchantment, int level, String... lore) {
-		ItemMeta itemMeta = createItem(itemStack, displayName, lore).getItemMeta();
-		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		if (enchantment != null)
-			itemMeta.addEnchant(enchantment, level, true);
+		itemMeta.spigot().setUnbreakable(true);
 		itemStack.setItemMeta(itemMeta);
 		return itemStack;
 	}
@@ -53,20 +38,6 @@ public class ItemUtil {
 			potion.extend();
 		potion.setSplash(splash);
 		potion.apply(itemStack);
-		return itemStack;
-	}
-	
-	public static ItemStack createItem(ItemStack itemStack, String displayName, DyeColor dyeColor) {
-		return createItem(itemStack, displayName, dyeColor, new String[]{});
-	}
-	
-	public static ItemStack createItem(ItemStack itemStack, String displayName, DyeColor dyeColor, String... lore) {
-		LeatherArmorMeta itemMeta = (LeatherArmorMeta) itemStack.getItemMeta();
-		itemMeta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
-		itemMeta.setDisplayName(displayName);
-		itemMeta.setLore(Arrays.asList(lore));
-		itemMeta.setColor(dyeColor.getColor());
-		itemStack.setItemMeta(itemMeta);
 		return itemStack;
 	}
 	

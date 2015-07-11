@@ -4,18 +4,9 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
-
-
-
-
 import me.mani.deathnote.DeathNote;
 import me.mani.deathnote.map.Altar;
-
-
-
 import me.mani.deathnote.util.Effects;
-
 import me.mani.deathnote.util.Messenger;
 
 import org.bukkit.Bukkit;

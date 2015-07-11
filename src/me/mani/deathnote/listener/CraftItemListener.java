@@ -16,7 +16,7 @@ public class CraftItemListener extends DeathNoteListener {
 	@EventHandler
 	public void onCraftItem(CraftItemEvent ev) {
 		
-		if (ev.getRecipe().getResult().getType() == Material.EMPTY_MAP) {
+		if (ev.getRecipe().getResult().getType() == Material.NAME_TAG) {
 			String ownerName = "§c???";
 			for (ItemStack itemStack : ev.getInventory().getMatrix())
 				if (itemStack != null && itemStack.getType() == Material.POTION)
@@ -27,6 +27,7 @@ public class CraftItemListener extends DeathNoteListener {
 			itemMeta.setLore(Arrays.asList(ownerName));
 			itemStack.setItemMeta(itemMeta);
 			ev.setCurrentItem(itemStack);
+			ev.getWhoClicked().getInventory().setItem(1, DeathNote.getInstance().getGameManager().itemManager.getItemStack(Material.GLASS_BOTTLE));
 		}
 		
 	}

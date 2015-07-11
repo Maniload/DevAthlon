@@ -1,9 +1,9 @@
 package me.mani.deathnote.command;
 
-import org.bukkit.entity.Player;
-
 import me.mani.deathnote.DeathNote;
 import me.mani.deathnote.DeathNoteCommand;
+
+import org.bukkit.entity.Player;
 
 public class StartCommand extends DeathNoteCommand {
 

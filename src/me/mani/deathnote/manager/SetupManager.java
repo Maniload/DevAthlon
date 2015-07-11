@@ -2,7 +2,6 @@ package me.mani.deathnote.manager;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import me.mani.deathnote.command.StartCommand;
 import me.mani.deathnote.command.TutorialCommand;
@@ -10,7 +9,9 @@ import me.mani.deathnote.listener.CraftItemListener;
 import me.mani.deathnote.listener.EntityDamageByEntityListener;
 import me.mani.deathnote.listener.EntityDamageListener;
 import me.mani.deathnote.listener.EntityRegainHealthListener;
+import me.mani.deathnote.listener.InventoryClickListener;
 import me.mani.deathnote.listener.PlayerDeathListener;
+import me.mani.deathnote.listener.PlayerDropItemListener;
 import me.mani.deathnote.listener.PlayerInteractListener;
 import me.mani.deathnote.listener.PlayerJoinListener;
 import me.mani.deathnote.listener.PlayerMoveListener;
@@ -19,7 +20,6 @@ import me.mani.deathnote.map.Altar;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ShapelessRecipe;
 
@@ -75,6 +75,8 @@ public class SetupManager {
 		new EntityDamageByEntityListener();
 		new EntityRegainHealthListener();
 		new PlayerDeathListener();
+		new InventoryClickListener();
+		new PlayerDropItemListener();
 	}
 	
 	private void setupCommands() {

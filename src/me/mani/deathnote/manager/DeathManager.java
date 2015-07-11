@@ -42,7 +42,7 @@ public class DeathManager {
 			if (playersLeft.size() == 1) {
 				Messenger.sendAll("§c" + playersLeft.get(0).getName() + " §7hat das Spiel gewonnen.");
 				Messenger.send(killer, "+ 10 Sündenpunkte");
-				
+				deathNoteKiller.addSinPoints(10);
 				DeathNote.getInstance().getGameManager().finishGame();
 			}
 		}

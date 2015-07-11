@@ -8,6 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class EntityDamageByEntityListener extends DeathNoteListener {
 
@@ -23,6 +25,10 @@ public class EntityDamageByEntityListener extends DeathNoteListener {
 				ev.setDamage(2.0);
 				damager.getInventory().setItem(1, DeathNote.getInstance().getGameManager().itemManager.getBloodPotion(player));
 				deathNotePlayer.addSoulEffect(200);
+			}
+			else if (damager.getItemInHand().getType() == Material.IRON_SWORD && !deathNotePlayer.hasSoulEffect() && deathNotePlayer.isIngame()) {
+				player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20, 1));
+				ev.setCancelled(true);
 			}
 			else
 				ev.setCancelled(true);

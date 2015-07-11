@@ -18,6 +18,7 @@ public class InventoryManager {
 		ingameInventoryItems = new ItemStack[36];
 		ingameInventoryItems[0] = itemManager.getItemStack(Material.IRON_SWORD);
 		ingameInventoryItems[1] = itemManager.getItemStack(Material.GLASS_BOTTLE);
+		ingameInventoryItems[8] = itemManager.getItemStack(Material.COMPASS);
 	}
 	
 	public void giveIngameInventory(Player player) {

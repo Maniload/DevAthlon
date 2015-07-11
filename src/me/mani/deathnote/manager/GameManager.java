@@ -80,8 +80,10 @@ public class GameManager {
 		for (Player onlinePlayer : Bukkit.getOnlinePlayers())
 			playersLeft.add(DeathNotePlayer.getDeathNotePlayer(onlinePlayer));
 		Collections.sort(playersLeft);
+		Messenger.sendAll("§cLeaderboard\n ");
+		int i = 1;
 		for (DeathNotePlayer deathNotePlayer : playersLeft)
-			Messenger.sendAll("#1 §c" + deathNotePlayer.getPlayer().getName() + " §7- " + deathNotePlayer.getSinPoints() + " Sündenpunkte");
+			Messenger.sendAll("#" + i++ + " §c" + deathNotePlayer.getPlayer().getName() + " §7- " + deathNotePlayer.getSinPoints() + " Sündenpunkte");
 	}
 
 }
