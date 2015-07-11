@@ -5,6 +5,7 @@ import me.mani.deathnote.util.Effects;
 import me.mani.deathnote.util.Messenger;
 
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -16,12 +17,14 @@ public class GameManager {
 	public ItemManager itemManager;
 	public InventoryManager inventoryManager;
 	public ChestManager chestManager;
+	public AltarManager altarManager;
 	
 	public GameManager(SetupManager setupManager) {
 		locationManager = setupManager.locationManager;
 		itemManager = setupManager.itemManager;
 		inventoryManager = setupManager.inventoryManager;
 		chestManager = setupManager.chestManager;
+		altarManager = setupManager.altarManager;
 	}
 	
 	public void startWarmUp() {
@@ -33,10 +36,11 @@ public class GameManager {
 			deathNotePlayer.setIngame(true);
 			player.teleport(locationManager.getSpawnLocation().clone().add(Math.cos(Math.toRadians(360 / playerCount * i)) * 5, 0, Math.sin(Math.toRadians(360 / playerCount * i++))));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 160, 0));
-			player.setHealth(20.0);
+			player.setGameMode(GameMode.ADVENTURE);
 			player.setMaxHealth(20.0);
 			player.setHealthScale(20.0);
 			player.setHealthScaled(true);
+			player.setHealth(20.0);
 		}
 		CountdownManager.createCountdown((ev) -> {
 			
@@ -63,6 +67,7 @@ public class GameManager {
 			DeathNotePlayer deathNotePlayer = DeathNotePlayer.getDeathNotePlayer(player);
 			deathNotePlayer.addSoulEffect(200);
 		}
+		altarManager.startAltarSwappingTask();
 	}
 
 }

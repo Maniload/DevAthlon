@@ -10,7 +10,6 @@ import org.bukkit.Location;
 public class Altar {
 
 	private static Map<Location, Altar> altars = new HashMap<>();
-	private static Altar activeAltar;
 	
 	private Location location;
 	private boolean activ;
