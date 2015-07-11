@@ -38,4 +38,8 @@ public class ChestManager {
 		player.openInventory(chests.get(location));
 	}
 	
+	public void resetChests() {
+		chests.clear();
+	}
+	
 }

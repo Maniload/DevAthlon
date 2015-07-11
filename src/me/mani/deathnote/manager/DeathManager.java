@@ -21,7 +21,7 @@ public class DeathManager {
 		
 		if (deathNotePlayer.isIngame()) {
 			if (deathNoted) {
-				Messenger.sendAll("§c" + player.getName() + "§7wurde von §c" + killer.getName() + "§7's Death Note getötet.");
+				Messenger.sendAll("§c" + player.getName() + " §7wurde von §c" + killer.getName() + "§7's Death Note getötet.");
 				Messenger.send(killer, "+ 15 Sündenpunkte");
 				Effects.play(player, Sound.ORB_PICKUP);
 				deathNoteKiller.addSinPoints(15);

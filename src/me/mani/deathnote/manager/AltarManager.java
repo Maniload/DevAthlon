@@ -39,7 +39,7 @@ public class AltarManager {
 			Effects.playAll(Sound.PORTAL_TRAVEL);
 			Messenger.sendAll("Die aktiven Altare wurden vertauscht.");
 			
-		}, 1200, 1200);
+		}, 0, 1200);
 	}
 	
 	public void cancelAltarSwappingTask() {

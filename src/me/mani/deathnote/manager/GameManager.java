@@ -84,6 +84,7 @@ public class GameManager {
 		int i = 1;
 		for (DeathNotePlayer deathNotePlayer : playersLeft)
 			Messenger.sendAll("#" + i++ + " §c" + deathNotePlayer.getPlayer().getName() + " §7- " + deathNotePlayer.getSinPoints() + " Sündenpunkte");
+		chestManager.resetChests();
 	}
 
 }

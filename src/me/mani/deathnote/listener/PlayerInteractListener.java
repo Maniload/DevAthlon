@@ -51,7 +51,7 @@ public class PlayerInteractListener extends DeathNoteListener {
 				}
 				else if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
 					FileConfiguration configuration = DeathNote.getInstance().getConfig();
-					configuration.set("atlarLocations", new ArrayList<>());
+					configuration.set("altarLocations", new ArrayList<>());
 					DeathNote.getInstance().saveConfig();
 					Messenger.send(player, "Altare zurückgesetzt. Alle Altare wurden gelöscht."); 
 				}
