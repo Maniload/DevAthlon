@@ -10,7 +10,6 @@ import me.mani.deathnote.listener.EntityDamageByEntityListener;
 import me.mani.deathnote.listener.EntityDamageListener;
 import me.mani.deathnote.listener.EntityRegainHealthListener;
 import me.mani.deathnote.listener.PlayerInteractListener;
-import me.mani.deathnote.listener.PlayerItemConsumeListener;
 import me.mani.deathnote.listener.PlayerJoinListener;
 import me.mani.deathnote.listener.PlayerMoveListener;
 import me.mani.deathnote.map.Altar;
@@ -74,7 +73,6 @@ public class SetupManager {
 		new EntityDamageListener();
 		new EntityDamageByEntityListener();
 		new EntityRegainHealthListener();
-		new PlayerItemConsumeListener();
 	}
 	
 	private void setupCommands() {

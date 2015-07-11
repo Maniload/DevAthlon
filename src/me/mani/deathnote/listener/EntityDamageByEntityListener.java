@@ -18,12 +18,13 @@ public class EntityDamageByEntityListener extends DeathNoteListener {
 			Player player = (Player) ev.getEntity();
 			DeathNotePlayer deathNotePlayer = DeathNotePlayer.getDeathNotePlayer(player);
 			Player damager = (Player) ev.getDamager();
-			if (damager.getItemInHand().getType() == Material.IRON_SWORD && !deathNotePlayer.hasSoulEffect() && deathNotePlayer.isIngame()) {
+			DeathNotePlayer deathNoteDamager = DeathNotePlayer.getDeathNotePlayer(damager);
+			if (damager.getItemInHand().getType() == Material.IRON_SWORD && !deathNoteDamager.hasSoulEffect() && !deathNotePlayer.hasSoulEffect() && deathNotePlayer.isIngame()) {
 				ev.setDamage(2.0);
 				damager.getInventory().setItem(1, DeathNote.getInstance().getGameManager().itemManager.getBloodPotion(player));
-				deathNotePlayer.addSoulEffect(100);
+				deathNotePlayer.addSoulEffect((int) (10 - player.getHealth() * 100));
 			}
-			else 
+			else
 				ev.setCancelled(true);
 		}
 		else

@@ -11,7 +11,6 @@ import me.mani.deathnote.util.Messenger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -69,9 +68,11 @@ public class PlayerInteractListener extends DeathNoteListener {
 							DeathNotePlayer deathNotePlayer = DeathNotePlayer.getDeathNotePlayer(player);
 								if (deathNotePlayer.isIngame() && !deathNotePlayer.hasSoulEffect()) {
 									String rawOwnerName = itemStack.getItemMeta().getLore().get(0);
-									Player otherPlayer = Bukkit.getPlayer(rawOwnerName.substring(2, rawOwnerName.length() - 1));
-									if (otherPlayer != null)
+									Player otherPlayer = Bukkit.getPlayer(rawOwnerName.substring(2, rawOwnerName.length()));
+									if (otherPlayer != null) {
 										otherPlayer.setHealth(0.0);
+										otherPlayer.getWorld().strikeLightningEffect(otherPlayer.getLocation());
+									}
 									player.setItemInHand(null);
 									Bukkit.getOnlinePlayers().forEach((onlinePlayer) -> {
 										onlinePlayer.spigot().playEffect(
@@ -87,8 +88,20 @@ public class PlayerInteractListener extends DeathNoteListener {
 							Effects.play(player, Sound.ANVIL_LAND);
 					}
 				}
-				ev.setUseItemInHand(Result.DENY);
-				ev.setCancelled(true);
+				player.setItemInHand(itemStack);
+			}
+			else if (itemStack != null && itemStack.getType() == Material.INK_SACK) {
+				player.setMaxHealth(player.getMaxHealth() + 2);
+				player.setHealthScale(player.getMaxHealth());
+				player.setHealth(player.getMaxHealth());
+				player.spigot().playEffect(player.getLocation(), Effect.HEART, 0, 0, 3, 3, 3, 0, 50, 100);
+				Effects.play(player, Sound.SPLASH);
+				Messenger.send(player, "+ 1 Herzcontainer");
+				ItemStack handItemStack = player.getItemInHand();
+				handItemStack.setAmount(handItemStack.getAmount() - 1);
+				if (handItemStack.getAmount() <= 0)
+					handItemStack = null;
+				player.setItemInHand(handItemStack);				
 			}
 			if (action == Action.RIGHT_CLICK_BLOCK && block.getType() == Material.ENDER_CHEST) {
 				DeathNote.getInstance().getGameManager().chestManager.openChest(player, block.getLocation());	

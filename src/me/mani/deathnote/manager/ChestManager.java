@@ -25,6 +25,8 @@ public class ChestManager {
 		if (!chests.containsKey(location)) {
 			Inventory inventory = Bukkit.createInventory(null, 9 * 5, "Equipment");
 			int randomInteger = RandomUtil.getRandomInteger(0, 100);
+			if (randomInteger == 0)
+				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), itemManager.getItemStack(Material.INK_SACK, 3));
 			if (randomInteger < 8)
 				inventory.setItem(RandomUtil.getRandomInteger(0, inventory.getSize() - 1), itemManager.getItemStack(Material.INK_SACK));
 			else if (randomInteger < 18)

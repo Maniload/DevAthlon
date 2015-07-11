@@ -36,26 +36,23 @@ public class GameManager {
 			deathNotePlayer.setIngame(true);
 			player.teleport(locationManager.getSpawnLocation().clone().add(Math.cos(Math.toRadians(360 / playerCount * i)) * 5, 0, Math.sin(Math.toRadians(360 / playerCount * i++))));
 			player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 160, 0));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 255));
+			player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 200, 255));
+			
 			player.setGameMode(GameMode.ADVENTURE);
-			player.setMaxHealth(20.0);
-			player.setHealthScale(20.0);
+			player.setMaxHealth(6.0);
+			player.setHealthScale(6.0);
 			player.setHealthScaled(true);
-			player.setHealth(20.0);
+			player.setHealth(6.0);
+			
+			inventoryManager.giveIngameInventory(player);
+			Effects.play(player, Sound.ITEM_PICKUP);
 		}
 		CountdownManager.createCountdown((ev) -> {
 			
-			ev.setMessage("Das Spiel startet in " + ev.getCurrentNumber() + " Sekunde" + (ev.getCurrentNumber() == 1 ? "" : 'n') + ".");
-			ev.setSound(Sound.BLAZE_HIT);
-			
-			if (ev.getCurrentNumber() == 5) {
-				Bukkit.getOnlinePlayers().forEach((player) -> inventoryManager.giveIngameInventory(player));
-				Effects.playAll(Sound.ITEM_PICKUP);
-			}
-			else if (ev.getCurrentNumber() >= 3) {
-				Bukkit.getOnlinePlayers().forEach((player) -> {
-					player.setMaxHealth(ev.getCurrentNumber() * 2.0);
-					player.setHealthScale(ev.getCurrentNumber() * 2.0);
-				});
+			if (ev.getCurrentNumber() == 10 || ev.getCurrentNumber() <= 5) {
+				ev.setMessage("Das Spiel startet in " + ev.getCurrentNumber() + " Sekunde" + (ev.getCurrentNumber() == 1 ? "" : 'n') + ".");
+				ev.setSound(Sound.BLAZE_HIT);
 			}
 			
 		}, () -> startGame(), 10, 0, 20L);

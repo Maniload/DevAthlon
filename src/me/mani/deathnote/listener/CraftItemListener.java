@@ -24,7 +24,7 @@ public class CraftItemListener extends DeathNoteListener {
 			ItemStack itemStack = DeathNote.getInstance().getGameManager().itemManager.getItemStack(Material.EMPTY_MAP);
 			ItemMeta itemMeta = itemStack.getItemMeta();
 			itemMeta.setDisplayName(ownerName + "§7's Death Note");
-			itemMeta.setLore(Arrays.asList("§c" + ownerName));
+			itemMeta.setLore(Arrays.asList(ownerName));
 			itemStack.setItemMeta(itemMeta);
 			ev.setCurrentItem(itemStack);
 		}

@@ -44,6 +44,7 @@ public class AltarManager {
 			altar.setActiv(true);
 			altar.getLocation().getBlock().getRelative(BlockFace.DOWN).setData((byte) 10);
 			
+			Bukkit.getOnlinePlayers().forEach((player) -> player.setCompassTarget(altar.getLocation()));
 			Effects.playAll(Sound.PORTAL_TRAVEL);
 			Messenger.sendAll("Die aktiven Altare wurden vertauscht.");
 			
