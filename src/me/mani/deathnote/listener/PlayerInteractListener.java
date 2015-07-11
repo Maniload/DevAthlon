@@ -1,23 +1,27 @@
 package me.mani.deathnote.listener;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.mani.deathnote.DeathNote;
 import me.mani.deathnote.DeathNoteListener;
 import me.mani.deathnote.DeathNotePlayer;
+import me.mani.deathnote.manager.DeathManager;
 import me.mani.deathnote.map.Altar;
 import me.mani.deathnote.util.Effects;
 import me.mani.deathnote.util.Messenger;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Effect;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -56,12 +60,21 @@ public class PlayerInteractListener extends DeathNoteListener {
 			else if (itemStack != null && itemStack.getType() == Material.STICK) {
 				if (action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK) {
 					FileConfiguration configuration = DeathNote.getInstance().getConfig();
-					configuration.set("spawnLocation", player.getLocation());
+					@SuppressWarnings("unchecked")
+					List<Location> list = (List<Location>) configuration.getList("spawnLocations", new ArrayList<>());
+					list.add(player.getLocation());
+					configuration.set("spawnLocations", list);
 					DeathNote.getInstance().saveConfig();
-					Messenger.send(player, "Neuer Spawn wurde gespeichert."); 
+					Messenger.send(player, "Neuer Spawn wurde gespeichert. Neue Anzahl: " + list.size()); 
+				}
+				else if (action == Action.LEFT_CLICK_AIR || action == Action.LEFT_CLICK_BLOCK) {
+					FileConfiguration configuration = DeathNote.getInstance().getConfig();
+					configuration.set("spawnLocations", new ArrayList<>());
+					DeathNote.getInstance().saveConfig();
+					Messenger.send(player, "Spawn zurückgesetzt. Alle Spawns wurden gelöscht."); 
 				}
 			}
-			else if (itemStack != null && itemStack.getType() == Material.EMPTY_MAP) {
+			else if (itemStack != null && itemStack.getType() == Material.NAME_TAG) {
 				if (action == Action.RIGHT_CLICK_BLOCK) {
 					if (block.getType() == Material.ENDER_PORTAL_FRAME && Altar.getAltar(block.getLocation()) != null) {
 						if (Altar.getAltar(block.getLocation()).isActiv()) {
@@ -71,6 +84,7 @@ public class PlayerInteractListener extends DeathNoteListener {
 									Player otherPlayer = Bukkit.getPlayer(rawOwnerName.substring(2, rawOwnerName.length()));
 									if (otherPlayer != null) {
 										otherPlayer.setHealth(0.0);
+										DeathManager.handleDeath(otherPlayer, true, player);
 										otherPlayer.getWorld().strikeLightningEffect(otherPlayer.getLocation());
 									}
 									player.setItemInHand(null);
@@ -88,7 +102,6 @@ public class PlayerInteractListener extends DeathNoteListener {
 							Effects.play(player, Sound.ANVIL_LAND);
 					}
 				}
-				player.setItemInHand(itemStack);
 			}
 			else if (itemStack != null && itemStack.getType() == Material.INK_SACK) {
 				player.setMaxHealth(player.getMaxHealth() + 2);
@@ -102,6 +115,26 @@ public class PlayerInteractListener extends DeathNoteListener {
 				if (handItemStack.getAmount() <= 0)
 					handItemStack = null;
 				player.setItemInHand(handItemStack);				
+			}
+			else if (itemStack != null && itemStack.getType() == Material.COMPASS) {
+				for (Altar altar : Altar.getAltars()) {
+					if (altar.isActiv()) {
+						for (Entity entity : altar.getLocation().getWorld().getNearbyEntities(altar.getLocation(), 7.0, 7.0, 7.0))
+							if (entity instanceof Player) {
+								((Player) entity).teleport(DeathNote.getInstance().getGameManager().locationManager.getSpawnLocations().get(0));
+								Effects.play((Player) entity, Sound.ENDERMAN_TELEPORT);
+								Messenger.send(player, "+ 1 Sündenpunkt");
+								Effects.play(player, Sound.ORB_PICKUP);
+								DeathNotePlayer.getDeathNotePlayer(player).addSinPoints(1);
+							}
+					}
+				}
+				ItemStack handItemStack = player.getItemInHand();
+				handItemStack.setAmount(handItemStack.getAmount() - 1);
+				if (handItemStack.getAmount() <= 0)
+					handItemStack = null;
+				player.setItemInHand(handItemStack);
+				Effects.play(player, Sound.ITEM_BREAK);
 			}
 			if (action == Action.RIGHT_CLICK_BLOCK && block.getType() == Material.ENDER_CHEST) {
 				DeathNote.getInstance().getGameManager().chestManager.openChest(player, block.getLocation());	

@@ -12,7 +12,8 @@ public class Messenger {
 	}
 	
 	public static void send(Player player, String message, boolean prefix) {
-		player.sendMessage((prefix ? Messenger.prefix : "") + message);
+		if (message != null)
+			player.sendMessage((prefix ? Messenger.prefix : "") + message);
 	}
 	
 	public static void sendAll(String message) {
@@ -20,7 +21,8 @@ public class Messenger {
 	}
 	
 	public static void sendAll(String message, boolean prefix) {
-		Bukkit.broadcastMessage((prefix ? Messenger.prefix : "") + message);
+		if (message != null)
+			Bukkit.broadcastMessage((prefix ? Messenger.prefix : "") + message);
 	}
 	
 	public static void setPrefix(String prefix) {

@@ -1,17 +1,19 @@
 package me.mani.deathnote.manager;
 
+import java.util.List;
+
 import org.bukkit.Location;
 
 public class LocationManager {
 	
-	private final Location spawnLocation;
+	private final List<Location> spawnLocations;
 	
-	public LocationManager(Location spawnLocation) {
-		this.spawnLocation = spawnLocation;
+	public LocationManager(List<Location> spawnLocations) {
+		this.spawnLocations = spawnLocations;
 	}
 	
-	public Location getSpawnLocation() {
-		return spawnLocation;
+	public List<Location> getSpawnLocations() {
+		return spawnLocations;
 	}
 
 }

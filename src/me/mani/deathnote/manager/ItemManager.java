@@ -28,7 +28,7 @@ public class ItemManager {
 		items.put(Material.PAPER, ItemUtil.createItem(new ItemStack(Material.PAPER), "§7Death Note"));
 		items.put(Material.COMPASS, ItemUtil.createItem(new ItemStack(Material.COMPASS), "§7Altarfinder"));
 		items.put(Material.INK_SACK, ItemUtil.createItem(new ItemStack(Material.INK_SACK, 1, (short) 1), "§cHerzcontainer"));
-		items.put(Material.EMPTY_MAP, ItemUtil.createItem(new ItemStack(Material.EMPTY_MAP), "§c???§7's Death Note"));
+		items.put(Material.NAME_TAG, ItemUtil.createItem(new ItemStack(Material.NAME_TAG), "§c???§7's Death Note"));
 		items.put(Material.POTION, ItemUtil.createItem(new ItemStack(Material.POTION), "", PotionType.INSTANT_HEAL, 1, false, false));
 	}
 	

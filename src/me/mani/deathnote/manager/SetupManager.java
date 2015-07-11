@@ -2,6 +2,7 @@ package me.mani.deathnote.manager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import me.mani.deathnote.command.StartCommand;
 import me.mani.deathnote.command.TutorialCommand;
@@ -9,6 +10,7 @@ import me.mani.deathnote.listener.CraftItemListener;
 import me.mani.deathnote.listener.EntityDamageByEntityListener;
 import me.mani.deathnote.listener.EntityDamageListener;
 import me.mani.deathnote.listener.EntityRegainHealthListener;
+import me.mani.deathnote.listener.PlayerDeathListener;
 import me.mani.deathnote.listener.PlayerInteractListener;
 import me.mani.deathnote.listener.PlayerJoinListener;
 import me.mani.deathnote.listener.PlayerMoveListener;
@@ -45,8 +47,7 @@ public class SetupManager {
 	
 	@SuppressWarnings("unchecked")
 	private void setupLocations() {
-		World defaultWorld = Bukkit.getWorld("world");
-		locationManager = new LocationManager((Location) config.get("spawnLocation", defaultWorld.getSpawnLocation()));
+		locationManager = new LocationManager((List<Location>) config.getList("spawnLocations", new ArrayList<>()));
 		for (Location location : (List<Location>) config.getList("altarLocations", new ArrayList<>()))
 			Altar.getAltar(location);
 	}
@@ -60,7 +61,7 @@ public class SetupManager {
 	
 	@SuppressWarnings("deprecation")
 	private void setupCraftingRecipes() {
-		ShapelessRecipe deathNoteCraftingRecipe = new ShapelessRecipe(itemManager.getItemStack(Material.EMPTY_MAP));
+		ShapelessRecipe deathNoteCraftingRecipe = new ShapelessRecipe(itemManager.getItemStack(Material.NAME_TAG));
 		deathNoteCraftingRecipe.addIngredient(Material.PAPER).addIngredient(Material.POTION.getNewData((byte) 5));
 		Bukkit.addRecipe(deathNoteCraftingRecipe);
 	}
@@ -73,6 +74,7 @@ public class SetupManager {
 		new EntityDamageListener();
 		new EntityDamageByEntityListener();
 		new EntityRegainHealthListener();
+		new PlayerDeathListener();
 	}
 	
 	private void setupCommands() {
